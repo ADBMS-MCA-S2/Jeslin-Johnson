@@ -1,0 +1,115 @@
+db.studlist.insert({fname:"vinay",lname:"george",grade:"A",mark:85,contact:7078885163,location:"ekm",department:"Mech",gender:"male"})
+WriteResult({ "nInserted" : 1 })
+> db.studlist.insert({fname:"Juliniya",lname:"joseph",grade:"A+",mark:98,contact:8547097823,location:"kollam",department:"CS",gender:"female"})
+WriteResult({ "nInserted" : 1 })
+> db.studlist.insert({fname:"cathy",lname:"henry",grade:"B",mark:75,contact:7853497823,location:"tvm",department:"Mca",gender:"female"})
+WriteResult({ "nInserted" : 1 })
+> db.studlist.insert({fname:"jwala",lname:"grace",grade:"B+",mark:85,contact:7853497823,location:"kollam",department:"Mca",gender:"female"})
+WriteResult({ "nInserted" : 1 })
+> db.studlist.find({gender:"female"},{fname:1,lname:1,mark:1})
+{ "_id" : ObjectId("628deea121b5af8b4595d7c8"), "fname" : "jeslin", "lname" : "johnson", "mark" : 95 }
+{ "_id" : ObjectId("628df06721b5af8b4595d7cb"), "fname" : "Juliniya", "lname" : "joseph", "mark" : 98 }
+{ "_id" : ObjectId("628df11e21b5af8b4595d7cc"), "fname" : "cathy", "lname" : "henry", "mark" : 75 }
+{ "_id" : ObjectId("628df16221b5af8b4595d7cd"), "fname" : "jwala", "lname" : "grace", "mark" : 85 }
+> db.studlist.find({"},{fname:1,lname:1,mark:1})
+uncaught exception: SyntaxError: "" literal not terminated before end of script :
+@(shell):1:46
+> db.studlist.find({gender:"female"},{fname:1,lname:1,mark:1,_id:0})
+{ "fname" : "jeslin", "lname" : "johnson", "mark" : 95 }
+{ "fname" : "Juliniya", "lname" : "joseph", "mark" : 98 }
+{ "fname" : "cathy", "lname" : "henry", "mark" : 75 }
+{ "fname" : "jwala", "lname" : "grace", "mark" : 85 }
+> db.studlist.find({department:"mca",gender:"female"},{fname:1,lname:1,mark:1,_id:0})
+> db.studlist.find({department:"Mca",gender:"female"},{fname:1,lname:1,mark:1,_id:0})
+{ "fname" : "cathy", "lname" : "henry", "mark" : 75 }
+{ "fname" : "jwala", "lname" : "grace", "mark" : 85 }
+> db.studlist.find({department:"Mca"},{$max:{marks}_id:0})
+uncaught exception: SyntaxError: missing } after property list :
+@(shell):1:49
+> db.studlist.find({department:"Mca"},{$max:{marks}}_id:0})
+uncaught exception: SyntaxError: missing ) after argument list :
+@(shell):1:50
+> db.studlist.find({gender:"male",grade:"A+"},{id:0})
+{ "_id" : ObjectId("628def3e21b5af8b4595d7c9"), "fname" : "jeslin", "lname" : "johnson", "grade" : "A+", "mark" : 95, "contact" : 7025585163, "location" : "thrissur", "department" : "MCA", "gender" : "male" }
+> db.studlist.find({gender:"male",grade:"A+"},{_id:0})
+{ "fname" : "jeslin", "lname" : "johnson", "grade" : "A+", "mark" : 95, "contact" : 7025585163, "location" : "thrissur", "department" : "MCA", "gender" : "male" }
+> db.studlist.find({gender:"female",grade:"A+"},{_id:0})
+{ "fname" : "jeslin", "lname" : "johnson", "grade" : "A+", "mark" : 95, "contact" : 7025585163, "location" : "thrissur", "department" : "MCA", "gender" : "female" }
+{ "fname" : "Juliniya", "lname" : "joseph", "grade" : "A+", "mark" : 98, "contact" : 8547097823, "location" : "kollam", "department" : "CS", "gender" : "female" }
+> db.studlist.find({}).sort({mark:1}).limit(3).({_id:0})
+uncaught exception: SyntaxError: missing name after . operator :
+@(shell):1:45
+> db.studlist.find({}).sort({mark:1}).limit(3)
+{ "_id" : ObjectId("628df11e21b5af8b4595d7cc"), "fname" : "cathy", "lname" : "henry", "grade" : "B", "mark" : 75, "contact" : 7853497823, "location" : "tvm", "department" : "Mca", "gender" : "female" }
+{ "_id" : ObjectId("628df16221b5af8b4595d7cd"), "fname" : "jwala", "lname" : "grace", "grade" : "B+", "mark" : 85, "contact" : 7853497823, "location" : "kollam", "department" : "Mca", "gender" : "female" }
+{ "_id" : ObjectId("628def9421b5af8b4595d7ca"), "fname" : "vinay", "lname" : "george", "grade" : "A", "mark" : 85, "contact" : 7078885163, "location" : "ekm", "department" : "Mech", "gender" : "male" }
+> db.studlist.find({},{_id:0}).sort({mark:1}).limit(3)
+{ "fname" : "cathy", "lname" : "henry", "grade" : "B", "mark" : 75, "contact" : 7853497823, "location" : "tvm", "department" : "Mca", "gender" : "female" }
+{ "fname" : "jwala", "lname" : "grace", "grade" : "B+", "mark" : 85, "contact" : 7853497823, "location" : "kollam", "department" : "Mca", "gender" : "female" }
+{ "fname" : "vinay", "lname" : "george", "grade" : "A", "mark" : 85, "contact" : 7078885163, "location" : "ekm", "department" : "Mech", "gender" : "male" }
+> db.studlist.find({},{_id:0}).sort({mark:-1}).limit(3)
+{ "fname" : "Juliniya", "lname" : "joseph", "grade" : "A+", "mark" : 98, "contact" : 8547097823, "location" : "kollam", "department" : "CS", "gender" : "female" }
+{ "fname" : "jeslin", "lname" : "johnson", "grade" : "A+", "mark" : 95, "contact" : 7025585163, "location" : "thrissur", "department" : "MCA", "gender" : "female" }
+{ "fname" : "jeslin", "lname" : "johnson", "grade" : "A+", "mark" : 95, "contact" : 7025585163, "location" : "thrissur", "department" : "MCA", "gender" : "male" }
+> db.studlist.find({department:"mech"},{_id:0}).sort({mark:-1}).limit(3)
+> db.studlist.find({department:"mech"},{_id:0}).sort({mark:-1}).limit(1)
+> db.studlist.find({department:"Mech"},{_id:0}).sort({mark:-1}).limit(1)
+{ "fname" : "vinay", "lname" : "george", "grade" : "A", "mark" : 85, "contact" : 7078885163, "location" : "ekm", "department" : "Mech", "gender" : "male" }
+> db.studlist.aggregate([$group:{"max mark  is ":{$max:"$max"}}}]
+uncaught exception: SyntaxError: missing ] after element list :
+@(shell):1:29
+> db.studlist.aggregate([{$group:{"max mark  is ":{$max:"$max"}}}]
+...
+...
+> db.studlist.aggregate([$group:{"max mark  is ":{$max:"$max"}}}])
+uncaught exception: SyntaxError: missing ] after element list :
+@(shell):1:29
+> db.studlist.aggregate([{$group:{"max mark  is ":{$max:"$max"}}}])
+uncaught exception: Error: command failed: {
+        "ok" : 0,
+        "errmsg" : "a group specification must include an _id",
+        "code" : 15955,
+        "codeName" : "Location15955"
+} with original command request: {
+        "aggregate" : "studlist",
+        "pipeline" : [
+                {
+                        "$group" : {
+                                "max mark  is " : {
+                                        "$max" : "$max"
+                                }
+                        }
+                }
+        ],
+        "cursor" : {
+
+        },
+        "lsid" : {
+                "id" : UUID("a677f603-aa0e-4d65-b665-f69fb64fed86")
+        }
+} on connection: connection to 127.0.0.1:27017 : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:737:17
+assert.commandWorked@src/mongo/shell/assert.js:829:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:281:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.studlist.aggregate([{$group:{_id:0,"max mark  is ":{$max:"$max"}}}])
+{ "_id" : 0, "max mark  is " : null }
+> db.studlist.aggregate([{$group:{_id:0,"max mark  is ":{$max:"$mark"}}}])
+{ "_id" : 0, "max mark  is " : 98 }
+> db.studlist.find({$gt:90,gender:"female},{fname:1,lname:1,grade:1,mark:1,contact:1
+uncaught exception: SyntaxError: "" literal not terminated before end of script :
+@(shell):1:82
+> db.studlist.find({$gt:90,gender:"female"},{fname:1,lname:1,grade:1,mark:1,contact:1})
+Error: error: {
+        "ok" : 0,
+        "errmsg" : "unknown top level operator: $gt. If you have a field name that starts with a '$' symbol, consider using $getField or $setField.",
+        "code" : 2,
+        "codeName" : "BadValue"
+}
+> db.studlist.find({mark:{$gt:90},gender:"female"},{fname:1,lname:1,grade:1,mark:1,contact:1})
+{ "_id" : ObjectId("628deea121b5af8b4595d7c8"), "fname" : "jeslin", "lname" : "johnson", "grade" : "A+", "mark" : 95, "contact" : 7025585163 }
+{ "_id" : ObjectId("628df06721b5af8b4595d7cb"), "fname" : "Juliniya", "lname" : "joseph", "grade" : "A+", "mark" : 98, "contact" : 8547097823 }
+>
